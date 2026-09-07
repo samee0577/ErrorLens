@@ -1,0 +1,23 @@
+[project]
+name = "errorlens"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "samee", email = "shaikhsamee0577@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "groq>=1.7.0",
+    "mcp<2",
+    "openai>=3.8.0",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+] 
+
+[project.scripts]
+errorlens = "errorlens:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
