@@ -30,7 +30,7 @@ SYSTEM_PROMPT = (
     "You must call read_file on every file mentioned in the traceback before giving any diagnosis, even if the cause seems obvious from the error message alone."
 )
 
-USER_ERROR_REPORT = "I'm getting -1900 instead of 80, no error is thrown. Investigate the codebase and tell me the exact root cause of this error."
+USER_ERROR_REPORT = "I'm getting Total: -1520 when checking out items priced at 50 and 30 — I expected around 64. No error is thrown. Only investigate config.py, pricing.py, store.py, and main_test.py. Investigate the codebase and tell me the exact root cause."
 
 
 class Diagnosis(BaseModel):

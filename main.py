@@ -81,7 +81,7 @@ messages = [
         "point to. Do NOT suggest code fixes or rewrites — diagnosis only."
         "You must call read_file on every file mentioned in the traceback before giving any diagnosis, even if the cause seems obvious from the error message alone."
     )},
-    {"role": "user", "content": "I'm getting -1900 instead of 80, no error is thrown. Investigate the codebase and tell me the exact root cause of this error."}
+    {"role": "user", "content": "I'm getting Total: -1520 when checking out items priced at 50 and 30 — I expected around 64. No error is thrown. im running main_test.py. Investigate the codebase and tell me the exact root cause."},
 ]
 
 MAX_ITERATIONS = 10

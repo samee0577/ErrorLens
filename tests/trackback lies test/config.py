@@ -1,0 +1,1 @@
+DISCOUNT_RATE = 20  # meant to be 0.2, someone "fixed" it to look like a percentage
