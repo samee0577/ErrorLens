@@ -48,6 +48,10 @@ Compared three models on the same investigation task:
 
 **Ambiguous codebase, not a reasoning failure** — during stress testing, ErrorLens returned a *wrong* diagnosis once: it correctly found *a* bug matching the vague symptom description given, but it was an old test scenario left in the project folder, not the new one being tested. Not a logic failure — the codebase itself was ambiguous (two valid-looking "wrong discount" bugs coexisting). Lesson: diagnosis accuracy depends on codebase scoping as much as prompt or model quality.
 
+## Runtime input: simple first, upgraded on contact with a real limit
+
+Started with a single-line `input()` for pasting errors — deliberately minimal, just to unblock testing without editing code each time. Hit the obvious limitation immediately: a real traceback is multi-line, and `input()` only reads one line. Upgraded to read until a blank line, reassembling the full multi-line paste. Small decision, but a clean example of the actual workflow used throughout this project: ship the minimal version, let a real constraint (not a hypothetical one) decide when to add complexity.
+
 ## Stress test results
 
 Tested against four structurally different bug types, all correctly diagnosed once codebase ambiguity was controlled for:

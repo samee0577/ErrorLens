@@ -11,7 +11,7 @@ class Diagnosis(BaseModel):
     root_cause_line: Optional[int] = Field(description="The specific line number, if known.")
     reason: str = Field(description="Plain explanation of why this error is happening.")
     recommendation: str = Field(description="One-line description of what to change, no code.")
-    affects_files: list[str] = Field(description="Files OTHER than root_cause_file affected if the fix were applied elsewhere. Empty list if none.")
+    # affects_files: list[str] = Field(description="Files OTHER than root_cause_file affected if the fix were applied elsewhere. Empty list if none.")
 
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -68,6 +68,23 @@ def call_llm(messages, use_tools=True, structured=False):
             print(f"  [retry {attempt+1}/3] {e}")
     return None
 
+print("ErrorLens - Codebase Debugging Assistant\ndescribe your error or paste the traceback below:\n\n")
+print("Press Enter on an empty line when done:\n")
+
+lines = []
+while True:
+    line = input()
+    if line == "":
+        print("\nPlease wait...\n")
+        break
+    lines.append(line)
+
+error_description = "\n".join(lines)
+
+if not error_description.strip():
+    print("No input provided. Exiting.")
+    exit()
+
 messages = [
     {"role": "system", "content": (
         "You are ErrorLens, a codebase debugging assistant. Never answer from "
@@ -81,7 +98,7 @@ messages = [
         "point to. Do NOT suggest code fixes or rewrites — diagnosis only."
         "You must call read_file on every file mentioned in the traceback before giving any diagnosis, even if the cause seems obvious from the error message alone."
     )},
-    {"role": "user", "content": "I'm getting Total: -1520 when checking out items priced at 50 and 30 — I expected around 64. No error is thrown. im running main_test.py. Investigate the codebase and tell me the exact root cause."},
+    {"role": "user", "content": f'{error_description}\n\n investigate the codebase and provide a JSON object with the root cause file, line number (if known), reason and recommendation Do NOT provide any code or code snippets in your response.'}
 ]
 
 MAX_ITERATIONS = 10

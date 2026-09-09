@@ -62,6 +62,8 @@ uv run main.py
 
 Paste your error (or a description of the wrong behavior) when prompted, or edit the hardcoded report at the top of `main.py` for now — runtime input is a planned improvement.
 
+Update: ErrorLens now prompts for input at runtime instead of requiring a code edit
+
 To try the MCP version instead:
 ```bash
 uv run main_mcp.py

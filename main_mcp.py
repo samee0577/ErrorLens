@@ -30,7 +30,24 @@ SYSTEM_PROMPT = (
     "You must call read_file on every file mentioned in the traceback before giving any diagnosis, even if the cause seems obvious from the error message alone."
 )
 
-USER_ERROR_REPORT = "I'm getting Total: -1520 when checking out items priced at 50 and 30 — I expected around 64. No error is thrown. Only investigate config.py, pricing.py, store.py, and main_test.py. Investigate the codebase and tell me the exact root cause."
+print("ErrorLens - Codebase Debugging Assistant\ndescribe your error or paste the traceback below:\n\n")
+print("Press Enter on an empty line when done:\n")
+
+lines = []
+while True:
+    line = input()
+    if line == "":
+        print("\nPlease wait...\n")
+        break
+    lines.append(line)
+
+error_description = "\n".join(lines)
+
+if not error_description.strip():
+    print("No input provided. Exiting.")
+    exit()
+
+USER_ERROR_REPORT = f'{error_description}\n\n investigate the codebase and provide a JSON object with the root cause file, line number (if known), reason and recommendation Do NOT provide any code or code snippets in your response.'
 
 
 class Diagnosis(BaseModel):
@@ -43,10 +60,10 @@ class Diagnosis(BaseModel):
     reason: str = Field(
         description="Plain explanation of why this error is happening."
     )
-    affected_files: list[str] = Field(
-        description="Files OTHER than root_cause_file affected if the fix were "
-        "applied elsewhere instead. Empty list if none."
-    )
+    # affected_files: list[str] = Field(
+    #     description="Files OTHER than root_cause_file affected if the fix were "
+    #     "applied elsewhere instead. Empty list if none."
+    # )
     recommendation: str = Field(
         description="One-line description of the fix, no code."
     )
