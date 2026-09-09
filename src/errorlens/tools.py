@@ -1,5 +1,8 @@
-import os 
 from pathlib import Path
+import os
+
+def get_project_root():
+    return Path.cwd()
 
 # functions
 def read_file(filepath):
@@ -9,7 +12,7 @@ def read_file(filepath):
 
 def get_file_structure(directory=None):
     
-    base = Path(__file__).resolve().parent
+    base = get_project_root()
     if directory is None:
         target = base
     else:
@@ -27,16 +30,13 @@ def get_file_structure(directory=None):
     return "\n".join(structure)
 
 def search_codebase(query, directory=None, max_results=30):
-    base = Path(__file__).resolve().parent
+    base = get_project_root()
     if directory is None:
         target = base
     else:
         target = (base / directory).resolve()
 
-    EXCLUDE_FILES = {
-        "main.py", "main_mcp.py", "mcp_server.py", "tools.py",
-        "uv.lock", "pyproject.toml", ".gitignore", ".python-version"
-    }
+    EXCLUDE_FILES = {"uv.lock", "package-lock.json", "poetry.lock", ".gitignore", ".python-version", "pyproject.toml"}
     EXCLUDE_EXTENSIONS = {".lock", ".log"}
 
     matches = []
